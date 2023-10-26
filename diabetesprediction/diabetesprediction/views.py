@@ -19,9 +19,9 @@ def predict(request):
 
 def result(request):
     diabetes_dataset = pd.read_csv('/home/tarib/Desktop/DP1-main/diabetes.csv')
+ 
     X = diabetes_dataset.drop(columns = 'Outcome', axis=1)
-    Y = diabetes_dataset['Outcome']
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+    Y = diabetes_dataset['Outcome']   X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
 
     model = LogisticRegression(max_iter=1000)
     model.fit(X_train, Y_train)
@@ -43,7 +43,7 @@ def result(request):
     if pred == 1:
         result1 = "You have diabetes"
     else:
-        result1 = "You don't have diabetes"
+        result1 = "You don't have  diabetes"
 
     
     return render(request, 'predict.html', {"result2":result1})
