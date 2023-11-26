@@ -7,10 +7,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
-
-
-
-
 def home(request):
     return render(request, 'home.html')
 
@@ -19,9 +15,11 @@ def predict(request):
 
 def result(request):
     diabetes_dataset = pd.read_csv('/home/tarib/Desktop/DP1-main/diabetes.csv')
- 
-    X = diabetes_dataset.drop(columns = 'Outcome', axis=1)
-    Y = diabetes_dataset['Outcome']   X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+
+    Y = diabetes_dataset['Outcome']
+    X = diabetes_dataset.drop('Outcome', axis=1)
+
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=0)
 
     model = LogisticRegression(max_iter=1000)
     model.fit(X_train, Y_train)
@@ -37,13 +35,11 @@ def result(request):
 
     pred = model.predict([[val1, val2, val3, val4, val5, val6, val7, val8]])
 
-
     result1 = ""
 
     if pred == 1:
         result1 = "You have diabetes"
     else:
-        result1 = "You don't have  diabetes"
+        result1 = "You don't have diabetes"
 
-    
-    return render(request, 'predict.html', {"result2":result1})
+    return render(request, 'predict.html', {"result2": result1})
